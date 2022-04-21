@@ -98,6 +98,8 @@ func standardGoQuickSort(numbers []int) []int {
 }
 
 func pjSort(numbers []int) []int {
+	// creating a hashmap to know how many duplicates each number have
+	// also searching ro min and max in array/slice to know the difference
 	numbersMap := make(map[int]int, len(numbers))
 	min, max, number := 0, 0, 0
 	for i := 0; i < len(numbers); i++ {
@@ -109,13 +111,20 @@ func pjSort(numbers []int) []int {
 		}
 		numbersMap[number]++
 	}
+
+	// creating an empty array/slice with a size of difference between min and max
 	numbersFullRange := make([]int, max-min+1)
 	if min < 0 {
 		min = -min
 	}
+	// adding number to array/slice with and offset
 	for key, numberInMap := range numbersMap {
 		numbersFullRange[key+min] = numberInMap
 	}
+
+	// adding numbers to original array/slice
+	// using position and offset from previous intermediate array, position and offset indicates the number to insert
+	// using hashmap to know how many times to insert the particular number
 	position := 0
 	for i := 0; i < len(numbersFullRange); i++ {
 		for j := 0; j < numbersFullRange[i]; j++ {
